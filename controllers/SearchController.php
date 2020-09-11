@@ -21,6 +21,19 @@ try {
             break;
 
 
+            /*
+            * API No. 0
+            * API Name : 테스트 API
+            * 마지막 수정 날짜 : 19.04.29
+            */
+        case "getMotelGroupList":
+            http_response_code(200);
+            $res->result = getMotelGroupList();
+            $res->isSuccess = TRUE;
+            $res->code = 200;
+            $res->message = "모텔 도시-지역 불러오기 성공";
+            echo json_encode($res, JSON_NUMERIC_CHECK);
+            break;
 
         /*
          * 호텔 지역그룹 리스트 조회
@@ -140,7 +153,7 @@ try {
 
             $res->isSuccess = TRUE;
             $res->code = 200;
-            $res->message = "지역 모텔 불러오기 성공";
+            $res->message = "지역 호텔 불러오기 성공";
             $res->result = getHotels($isMember, $_GET['startAt'], $_GET['endAt'], $_GET['hotelGroupIdx'], $_GET['adult'], $_GET['child']);
             echo json_encode($res, JSON_NUMERIC_CHECK);
             break;
@@ -567,7 +580,7 @@ try {
             }
 
             // 필수키체크
-            isValidKey('groupIdx', $_GET);
+            
             isValidKey('adult', $_GET);
             isValidKey('child', $_GET);
             isValidKey('startAt', $_GET);

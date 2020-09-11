@@ -74,19 +74,7 @@ try {
             $res->message = "모텔 도시-지역 불러오기 성공";
             echo json_encode($res, JSON_NUMERIC_CHECK);
             break;
-        /*
-        * API No. 0
-        * API Name : 테스트 API
-        * 마지막 수정 날짜 : 19.04.29
-        */
-        case "getMotelGroupList":
-            http_response_code(200);
-            $res->result = getMotelGroupList();
-            $res->isSuccess = TRUE;
-            $res->code = 100;
-            $res->message = "모텔 도시-지역 불러오기 성공";
-            echo json_encode($res, JSON_NUMERIC_CHECK);
-            break;
+
         /*
         * API No. 0
         * API Name : 테스트 Body & Insert API
@@ -95,9 +83,9 @@ try {
         case "createUser":
             http_response_code(200);
             // 바디에 필수적으로 들어와야하는 키 체크
-            keyCheck('UserId', $req);
-            keyCheck('UserPwd', $req);
-            keyCheck('UserContact', $req);
+            isValidKey('UserId', $req);
+            isValidKey('UserPwd', $req);
+            isValidKey('UserContact', $req);
 
             // 이미 있는 아이디인지 체크
             if (isValidUserId($req->UserId)) {

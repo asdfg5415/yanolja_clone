@@ -1,10 +1,18 @@
 <?php
+require './pdos/AccomInfoPdo.php';
+require './pdos/AccomLoaderPdo.php';
+require './pdos/AccomMoneyInfoPdo.php';
+require './pdos/AccomPdo.php';
+require './pdos/AreaPdo.php';
+require './pdos/CheckerPdo.php';
 require './pdos/DatabasePdo.php';
 require './pdos/IndexPdo.php';
-require './pdos/WoodiePdo.php';
 require './pdos/MapPdo.php';
-require './pdos/AccomPdo.php';
+require './pdos/ReservationLoaderPdo.php';
 require './pdos/ReservationPdo.php';
+require './pdos/TimePdo.php';
+require './pdos/UserPdo.php';
+require './pdos/ValidationPdo.php';
 require './vendor/autoload.php';
 
 use \Monolog\Logger as Logger;
@@ -22,17 +30,17 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     // 유효성 검사는 요청 마다 함으로 굳이 필요없음
     //$r->addRoute('GET', '/jwt', ['MainController', 'validateJwt']);
 
-    $r->addRoute('GET', '/motel-groups', ['IndexController', 'getMotelGroupList']);
-    $r->addRoute('GET', '/hotel-groups', ['WoodieController', 'getHotelGroupList']);
-    $r->addRoute('GET', '/motels', ['WoodieController', 'getMotels']);
-    $r->addRoute('GET', '/hotels', ['WoodieController', 'getHotels']);
-    $r->addRoute('GET', '/motels/{accomIdx}', ['WoodieController', 'getMotelRooms']);
-    $r->addRoute('GET', '/hotels/{accomIdx}', ['WoodieController', 'getHotelRooms']);
-    $r->addRoute('GET', '/accoms/rooms', ['WoodieController', 'getRoomDetail']);
-    $r->addRoute('GET', '/accoms/moneyInfo', ['WoodieController', 'getAccomMoneyInfo']);
-    $r->addRoute('GET', '/accoms/sellerInfo', ['WoodieController', 'getAccomSellerInfo']);
-    $r->addRoute('GET', '/areas', ['WoodieController', 'getAreas']);
-    $r->addRoute('GET', '/areas/{groupIdx}', ['WoodieController', 'getAccomByArea']);
+    $r->addRoute('GET', '/motel-groups', ['SearchController', 'getMotelGroupList']);
+    $r->addRoute('GET', '/hotel-groups', ['SearchController', 'getHotelGroupList']);
+    $r->addRoute('GET', '/motels', ['SearchController', 'getMotels']);
+    $r->addRoute('GET', '/hotels', ['SearchController', 'getHotels']);
+    $r->addRoute('GET', '/motels/{accomIdx}', ['SearchController', 'getMotelRooms']);
+    $r->addRoute('GET', '/hotels/{accomIdx}', ['SearchController', 'getHotelRooms']);
+    $r->addRoute('GET', '/accoms/rooms', ['SearchController', 'getRoomDetail']);
+    $r->addRoute('GET', '/accoms/moneyInfo', ['SearchController', 'getAccomMoneyInfo']);
+    $r->addRoute('GET', '/accoms/sellerInfo', ['SearchController', 'getAccomSellerInfo']);
+    $r->addRoute('GET', '/areas', ['SearchController', 'getAreas']);
+    $r->addRoute('GET', '/areas/{groupIdx}', ['SearchController', 'getAccomByArea']);
     $r->addRoute('POST', '/jwt', ['MainController', 'createJwt']);
     $r->addRoute('POST', '/users', ['IndexController', 'createUser']);
 
@@ -128,10 +136,10 @@ switch ($routeInfo[0]) {
                 $vars = $routeInfo[2];
                 require './controllers/ReservationController.php';
                 break;
-            case 'WoodieController':
+            case 'SearchController':
                 $handler = $routeInfo[1][1];
                 $vars = $routeInfo[2];
-                require './controllers/WoodieController.php';
+                require './controllers/SearchController.php';
                 break;
             case 'MainController':
                 $handler = $routeInfo[1][1];
